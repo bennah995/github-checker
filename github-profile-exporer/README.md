@@ -1,16 +1,65 @@
-# React + Vite
+# GitHub User Getter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application that fetches and displays a GitHub user's profile and repositories using the public GitHub API.
 
-Currently, two official plugins are available:
+## Built With
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- Axios
+- TanStack Query (React Query)
+- Vite
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Search any GitHub username
+- Display user profile and public repository count
+- List all public repositories with name and description
+- Loading states for both user and repos
+- Graceful error handling for 404 (user not found) and 403 (rate limit reached)
+- Clear button to reset search
+- Query caching with 5 minute stale time — same username loads instantly on repeat search
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── api/
+│   ├── client.js        — Axios instance with interceptors
+│   └── user.service.js  — GitHub API calls
+├── components/
+│   └── User.jsx         — Main component with search, profile and repos
+├── App.jsx
+└── main.jsx
+```
+
+## How It Works
+
+- `client.js` creates an Axios instance pointing to `https://api.github.com`
+- Request interceptor attaches a Bearer token from localStorage if available
+- Response interceptor catches 404 and 403 errors and throws readable messages
+- `UserService` exposes two methods — `getUser(username)` and `getUserRepos(username)`
+- `User.jsx` uses two `useQuery` calls — one for the profile, one for repos
+- Queries are disabled until the user submits a username via the Search button
+- Errors and loading states render inline so the search input stays visible
+
+## Error Handling
+
+| Status | Message |
+|---|---|
+| 404 | User not found. Check the username and try again. |
+| 403 | GitHub API rate limit reached. Please wait and try again. |
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+## Environment Variables
+
+Optionally set a custom base URL in a `.env` file:
+
+```
+VITE_API_BASE_URL=https://api.github.com
+```
