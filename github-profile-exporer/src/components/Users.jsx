@@ -20,11 +20,11 @@ function UserGetter(){
     enabled: !!username
   })
 
-  if(isLoading) return <p>Searching for user...</p>
-  if(error) return <p>{error.message}</p>
+  // if(isLoading) return <p>Searching for user...</p>
+  // if(error) return <p>{error.message}</p>
 
-  if(reposLoading) return <p>Loading repos...</p>
-  if(reposError) return<p>{reposError.message}</p>
+  // if(reposLoading) return <p>Loading repos...</p>
+  // if(reposError) return<p>{reposError.message}</p>
 
   return(
     <div>
@@ -39,6 +39,8 @@ function UserGetter(){
       <button onClick={() => {setSearch(""); setUsername("");}}>Clear</button>
       
       {/* only runs when there is username is not empty and ony renders when data exists */}
+      {isLoading && <p>Searching for user...</p>}
+      {error && <p>{error.message}</p>}
       {data && (
       <div className="user-profile">
         <h2>{data.name}</h2>
@@ -48,6 +50,8 @@ function UserGetter(){
 
       {/* repos display */}
       <h2 style={{color: "green"} }>Repositories: </h2>
+      {reposLoading && <p>Loading repos...</p>}
+      {reposError && <p>{reposError.message}</p>}
       {repos && (
         <div className="user-repos">
 
