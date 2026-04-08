@@ -31,6 +31,7 @@ function UserGetter(){
       <div className="user-Search">
         <input value={search}
           onChange={(e) => setSearch(e.target.value)}
+          placeholder="bennah"
         />
         <p></p>
         <button onClick={() => setUsername(search)}>Search</button>
