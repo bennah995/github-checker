@@ -32,8 +32,11 @@ function UserGetter(){
         <input value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <p></p>
         <button onClick={() => setUsername(search)}>Search</button>
       </div>
+      <p></p>
+      <button onClick={() => {setSearch(""); setUsername("");}}>Clear</button>
       
       {/* only runs when there is username is not empty and ony renders when data exists */}
       {data && (
