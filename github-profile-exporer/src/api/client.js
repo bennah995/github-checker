@@ -16,4 +16,17 @@ client.interceptors.request.use((config) => {
   return config;
 })
 
+client.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if(error.response?.status === 404){
+      throw new Error("User not found. Check the username and try again.")
+    }
+    if(error.response?.status === 403){
+      throw new Error("GitHub API rate limit reached. Please wait and try again.")
+    }
+    throw error;
+  }
+)
+
 export default client;
