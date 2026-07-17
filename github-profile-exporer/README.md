@@ -56,7 +56,7 @@ npm install
 npm run dev
 ```
 
-## Environment Variables
+### Environment Variables
 
 Optionally set a custom base URL in a `.env` file:
 
